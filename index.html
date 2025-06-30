@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Aulo-Queen – Accueil</title>
+  <link rel="icon" type="image/png" href="Logo_Aulo-Queen.png" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <a href="index.html">
+        <img src="Logo_Aulo-Queen fond vide.png" alt="Logo Aulo-Queen" />
+      </a>
+    </div>
+    <nav>
+  <a href="index.html" target="content-frame">Accueil</a>
+  <a href="models.html" target="content-frame">Modèles</a>
+  <a href="about.html" target="content-frame">A propos</a>
+</nav>
+  </header>
+  	<button id="sound-toggle" style="
+  margin-left: 10px;
+  margin-top: 5px;
+  font-size: 24px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+">
+  🔈
+</button>
+<script>
+  window.addEventListener("DOMContentLoaded", () => {
+    const audio = document.getElementById('bg-music');
+    const isPlaying = localStorage.getItem("playMusic") === "true";
+
+    if (isPlaying) {
+      audio.play().catch(() => {});
+    }
+
+    // Bouton toggle
+    document.getElementById("toggle").addEventListener("click", () => {
+      if (audio.paused) {
+        audio.play();
+        localStorage.setItem("playMusic", "true");
+      } else {
+        audio.pause();
+        localStorage.setItem("playMusic", "false");
+      }
+    });
+  });
+</script>
+
+
+
+  <main class="reveal">
+    <!-- Section accueil principale -->
+    <section class="hero reveal">
+      <h1>Bienvenue chez Aulo-Queen</h1>
+      <p><em>Votre élégance mérite cette voiture !</em></p>
+    </section>
+
+    <!-- Présentation générale -->
+    <section class="highlight reveal">
+      <h2>L’alliance du luxe et de la performance</h2>
+      <p>
+        Chez Aulo-Queen, nous ne fabriquons pas seulement des voitures. Nous sculptons des objets d'art technologiques, conçus pour marquer les esprits. Chaque courbe, chaque détail, chaque composant est choisi avec soin pour créer une expérience de conduite incomparable.
+      </p>
+      <p>
+        Nos véhicules sont assemblés à la main dans nos ateliers européens, avec des matériaux nobles comme le cuir italien, l’aluminium forgé et la fibre de carbone. Le tout, combiné à des technologies embarquées avancées et une motorisation pensée pour l’avenir.
+      </p>
+      <a href="about.html" class="btn" target="content-frame">En savoir plus sur notre histoire</a>
+    </section>
+
+    <!-- Mise en avant d’un modèle -->
+    <section class="highlight reveal">
+      <h2>Notre fleuron : Hyperion</h2>
+      <img src="Hyperion F1 Electrique.png" alt="Hyperion" />
+      <p>
+        Véritable bijou d’ingénierie, la Hyperion est notre hypercar de référence. 100% électrique, elle atteint 412 km/h, avec une accélération fulgurante de 0 à 100 km/h en seulement 2,4 secondes. Son design futuriste ne laisse personne indifférent.
+      </p>
+      <a href="models.html" class="btn" target="content-frame">Voir tous nos modèles</a>
+    </section>
+  </main>
+
+  <footer>
+    © 2025 Aulo-Queen. Tous droits réservés.
+  </footer>
+<!-- Musique (autoplay désactivé) -->
+<audio id="background-music" src="SpotiDownloader.com - On The Knife - Future Joust.mp3" loop></audio>
+
+<!-- Popup de bienvenue -->
+<div id="popup">
+  <div id="popup-content">
+    <h2>🔊 Activez le son dynamique !</h2>
+    <p>Pour une meilleure expérience visuelle et auditive.<br>
+    Le bouton se trouve en haut à gauche.</p>
+    <button onclick="closePopup()">J'ai compris</button>
+  </div>
+</div>
+<script>
+  // Détection de l'onglet principal
+const channel = new BroadcastChannel('aulo-queen-channel');
+const MAIN_WINDOW_NAME = 'auloQueenMain';
+
+if (!window.name) {
+  window.name = MAIN_WINDOW_NAME;
+}
+
+if (window.name !== MAIN_WINDOW_NAME) {
+  // C'est un nouvel onglet, on demande au principal de prendre le focus
+  channel.postMessage({ action: 'focus-main' });
+
+  // Ferme ce nouvel onglet (sauf si bloqué par le navigateur)
+  window.close();
+}
+
+// Écouteur dans chaque onglet
+channel.onmessage = (event) => {
+  if (event.data.action === 'focus-main' && window.name === MAIN_WINDOW_NAME) {
+    window.focus();
+  }
+};
+</script>
+
+</body>
+</html>
